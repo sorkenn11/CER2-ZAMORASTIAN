@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiante</title>
+</head>
+<body>
+    {% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-2" id="tabla">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+
+                <a href="crearProyecto/" class="btn btn-sm btn-block btn-info">Agregar</a>
+
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Proyectos</th>
+                            <th>Tema</th>
+                            <th>Profesor</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proyecto in proyectos %}
+                        <tr>
+                            <td>{{ proyecto.nombre_estudiante }}</td>
+                            <td>{{ proyecto.nombre_proyecto }}</td>
+                            <td>{{ proyecto.tema }}</td>
+                            <td>{{ proyecto.nombre_profesor }}</td>
+                            <td>
+                                {% if proyecto.nombre_estudiante == usuario_actual.get_full_name or proyecto.nombre_estudiante == usuario_actual.username %}
+                                    {% if proyecto.nombre_profesor == '-' %}
+                                        <a href="edicionCurso/{{ proyecto.id }}" class="btn btn-sm btn-block btn-info">Editar</a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

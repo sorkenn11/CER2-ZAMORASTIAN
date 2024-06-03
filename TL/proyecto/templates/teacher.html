@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesor</title>
+</head>
+<body>
+    {% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-2" id="tabla">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <form method="get" action="">
+                    <div class="form-group">
+                        <label for="filtro">Filtrar proyectos:</label>
+                        <select name="filtro" id="filtro" class="form-control" onchange="this.form.submit()">
+                            <option value="todos" {% if filtro == 'todos' %}selected{% endif %}>Todos</option>
+                            <option value="sin_patrocinio" {% if filtro == 'sin_patrocinio' %}selected{% endif %}>Sin Patrocinio</option>
+                        </select>
+                    </div>
+                </form>
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Proyectos</th>
+                            <th>Tema</th>
+                            <th>Profesor</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proyecto in proyectos %}
+                        <tr>
+                            <td>{{ proyecto.nombre_estudiante }}</td>
+                            <td>{{ proyecto.nombre_proyecto }}</td>
+                            <td>{{ proyecto.tema }}</td>
+                            <td>{{ proyecto.nombre_profesor }}</td>
+                            <td>
+                                {% if proyecto.nombre_profesor == '-' %}
+                                    <form method="post" action="{% url 'patrocinar_proyecto' proyecto.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary">Patrocinar</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

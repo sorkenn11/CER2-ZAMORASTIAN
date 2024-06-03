@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos Patrocinados</title>
+</head>
+<body>
+    {% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-2" id="tabla">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+
+                <!-- Filtro -->
+                <form method="get" action="#tabla" class="form-inline mb-3">
+                    <div class="form-group">
+                        <label for="tematica">Filtrar por temática:</label>
+                        <select name="tematica" id="tematica" class="form-control ml-2">
+                            <option value="">Todas</option>
+                            {% for tema in tematicas %}
+                                <option value="{{ tema }}" {% if tema == tematica_seleccionada %}selected{% endif %}>{{ tema }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary ml-2">Filtrar</button>
+                </form>
+
+                <table class="table table-striped mt-2">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Proyectos</th>
+                            <th>Tema</th>
+                            <th>Profesor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for proyecto in proyectos %}
+                        <tr>
+                            <td>{{ proyecto.nombre_estudiante }}</td>
+                            <td>{{ proyecto.nombre_proyecto }}</td>
+                            <td>{{ proyecto.tema }}</td>
+                            <td>{{ proyecto.nombre_profesor }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
